@@ -28,10 +28,11 @@ from pyams_utils.registry import query_utility
 from pyams_utils.traversing import get_parent
 from pyams_utils.url import absolute_url
 from pyams_workflow.interfaces import IWorkflow, IWorkflowCommentInfo, IWorkflowInfo, \
-    IWorkflowManagedContent, \
-    IWorkflowState, IWorkflowTransitionInfo, IWorkflowVersion
+    IWorkflowManagedContent, IWorkflowState, IWorkflowTransitionInfo, IWorkflowVersion, \
+    IWorkflowVersions
 from pyams_zmi.form import AdminModalAddForm
-from pyams_zmi.interfaces import IAdminLayer
+from pyams_zmi.interfaces import IAdminLayer, IPageTitle
+
 
 __docformat__ = 'restructuredtext'
 
@@ -52,6 +53,10 @@ class WorkflowContentTransitionForm(AdminModalAddForm):
             self.request.params.get('workflow.widgets.transition_id'))
 
     @property
+    def title(self):
+        return IPageTitle(self.context) or '--'
+
+    @property
     def legend(self):
         """Legend getter"""
         return self.request.localizer.translate(self.transition.title)
@@ -59,9 +64,28 @@ class WorkflowContentTransitionForm(AdminModalAddForm):
     fields = Fields(IWorkflowTransitionInfo) + \
         Fields(IWorkflowCommentInfo)
 
+    object_data = {
+        'ams-warn-on-change': False
+    }
+
+    @property
+    def deleted_target(self):
+        """Redirect target when current content is deleted"""
+        return self.request.root
+
     @property
     def edit_permission(self):
         return self.transition.permission
+
+    def update(self):
+        self.versions = IWorkflowVersions(self.context)
+        super().update()
+
+    def update_actions(self):
+        super().update_actions()
+        add_button = self.actions.get('add')
+        if add_button is not None:
+            add_button.title = self.request.localizer.translate(self.transition.title)
 
     def update_widgets(self, prefix=None):
         super().update_widgets(prefix)
@@ -73,14 +97,14 @@ class WorkflowContentTransitionForm(AdminModalAddForm):
     def create_and_add(self, data):
         data = data.get(self, {})
         info = IWorkflowInfo(self.context)
-        info.fire_transition(self.transition.transition_id, comment=data.get('comment'))
+        result = info.fire_transition(self.transition.transition_id, comment=data.get('comment'))
         info.fire_automatic()
         IWorkflowState(self.context).state_urgency = data.get('urgent_request') or False
         self.request.registry.notify(ObjectModifiedEvent(self.context))
-        return info
+        return result or info
 
     def next_url(self):
-        return absolute_url(self.context, self.request, 'summary.html')
+        return absolute_url(self.context, self.request, 'admin')
 
 
 @adapter_config(required=(IWorkflowVersion, IAdminLayer, WorkflowContentTransitionForm),
@@ -92,6 +116,19 @@ class WorkflowContentTransitionFormRenderer(ContextRequestViewAdapter):
         """Form changes renderer"""
         if not changes:
             return None
+        if IWorkflowVersion.providedBy(changes):  # new version
+            target = changes
+        else:
+            if changes.parent is None:  # deleted version
+                versions = self.view.versions
+                last_version = versions.get_last_versions()
+                if last_version:  # other versions
+                    target = last_version[0]
+                else:
+                    target = self.view.deleted_target
+            else:
+                target = changes.context
         return {
-            'status': 'reload'
+            'status': 'redirect',
+            'location': absolute_url(target, self.request, 'admin')
         }
