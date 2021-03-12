@@ -80,7 +80,7 @@ class WorkflowVersionHistoryValuesAdapter(ContextRequestViewAdapter):
 class WorkflowVersionHistoryDateColumn(I18nColumnMixin, DateColumn):
     """Workflow version history date column"""
 
-    _header = _("Date")
+    i18n_header = _("Date")
 
     attr_name = 'date'
     css_classes = {'td': 'nowrap'}
@@ -95,7 +95,7 @@ class WorkflowVersionHistoryDateColumn(I18nColumnMixin, DateColumn):
 class WorkflowVersionHistoryStateColumn(I18nColumnMixin, GetAttrColumn):
     """Workflow version history source column"""
 
-    _header = _("New state")
+    i18n_header = _("New state")
 
     attr_name = 'target_state'
     weight = 5
@@ -121,7 +121,7 @@ class WorkflowVersionHistoryStateColumn(I18nColumnMixin, GetAttrColumn):
 class WorkflowVersionHistoryPrincipalColumn(I18nColumnMixin, GetAttrColumn):
     """Workflow version history principal column"""
 
-    _header = _("Modifier")
+    i18n_header = _("Modifier")
 
     attr_name = 'principal'
     weight = 10
@@ -140,7 +140,7 @@ class WorkflowVersionHistoryPrincipalColumn(I18nColumnMixin, GetAttrColumn):
 class WorkflowVersionHistoryCommentColumn(I18nColumnMixin, GetAttrColumn):
     """Workflow version history comment column"""
 
-    _header = _("Comment")
+    i18n_header = _("Comment")
 
     attr_name = 'comment'
     weight = 15
