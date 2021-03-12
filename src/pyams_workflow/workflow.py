@@ -219,6 +219,8 @@ class WorkflowInfo:
         # pylint: disable=too-many-arguments
         """Fire transition(s) to given state"""
         current_state = IWorkflowState(self.context)
+        if state == current_state.state:  # unchanged state
+            return None
         transition_ids = self.get_fireable_transition_ids_toward(state, check_security)
         if not transition_ids:
             raise NoTransitionAvailableError(current_state.state, state)
