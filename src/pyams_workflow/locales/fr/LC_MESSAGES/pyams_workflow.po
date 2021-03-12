@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 1.0\n"
-"POT-Creation-Date: 2021-01-17 03:11+0100\n"
+"POT-Creation-Date: 2021-03-07 10:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Lingua 3.10.dev0\n"
 
+#. pylint: disable=invalid-name
 #: src/pyams_workflow/content.py:115
 #, python-format
 msgid "{date} by {principal}"
@@ -23,16 +24,9 @@ msgstr "{date} par {principal}"
 
 #: src/pyams_workflow/content.py:251
 #, python-format
-msgid "Clone created from version {source} (in  {state}  state)"
-msgstr "Copie créée à partir de la version {source} (alors en statut « {state} »)"
-
-#: src/pyams_workflow/interfaces.py:467
-msgid "Display first version date"
-msgstr "Afficher la date de publication de la première version"
-
-#: src/pyams_workflow/interfaces.py:468
-msgid "Display current version date"
-msgstr "Afficher la date de publication de cette version"
+msgid "Clone created from version {source} (in « {state} » state)"
+msgstr ""
+"Copie créée à partir de la version {source} (alors en statut « {state} »)"
 
 #: src/pyams_workflow/interfaces.py:147
 msgid "Transition ID"
@@ -56,11 +50,11 @@ msgstr "Date à laquelle ce statut a été appliqué"
 
 #: src/pyams_workflow/interfaces.py:379
 msgid "State principal"
-msgstr "Mandant"
+msgstr "Mandataire"
 
 #: src/pyams_workflow/interfaces.py:380
 msgid "ID of the principal which defined current state"
-msgstr "ID du mandant qui a défini ce statut"
+msgstr "ID du mandataire qui a défini ce statut"
 
 #: src/pyams_workflow/interfaces.py:383 src/pyams_workflow/interfaces.py:594
 msgid "Urgent request?"
@@ -81,6 +75,14 @@ msgstr "Permission de visualisation"
 #: src/pyams_workflow/interfaces.py:454
 msgid "This permission will be required to display content"
 msgstr "Cette permission sera nécessaire pour afficher ce contenu"
+
+#: src/pyams_workflow/interfaces.py:467
+msgid "Display first version date"
+msgstr "Afficher la date de publication de la première version"
+
+#: src/pyams_workflow/interfaces.py:468
+msgid "Display current version date"
+msgstr "Afficher la date de publication de cette version"
 
 #: src/pyams_workflow/interfaces.py:489
 msgid "Publication date"
@@ -132,9 +134,28 @@ msgid ""
 "a date here, this content will not be pushed anymore passed this date, but "
 "will still be available via search engine or direct links"
 msgstr ""
-"Certains contenus peuvent être \"poussés\" en front-office par certains composants ; "
-"si vous indiquez une date ici, ce contenu ne sera plus poussé au-delà de cette date, mais "
-"restera accessible via un moteur de recherche ou des liens directs"
+"Certains contenus peuvent être \"poussés\" en front-office par certains "
+"composants ; si vous indiquez une date ici, ce contenu ne sera plus poussé "
+"au-delà de cette date, mais restera accessible via un moteur de recherche ou "
+"des liens directs"
+
+#: src/pyams_workflow/interfaces.py:528
+msgid "Can't define push end date without publication start date!"
+msgstr ""
+"Vous ne pouvez pas définir de date de fin de mise en avant sans date de "
+"début de publication"
+
+#: src/pyams_workflow/interfaces.py:530
+msgid "Push end date must be defined after publication start date!"
+msgstr ""
+"La date de fin de mise en avant doit être définie après la date de début de "
+"publication !"
+
+#: src/pyams_workflow/interfaces.py:533
+msgid "Push end date must be null or defined before publication end date!"
+msgstr ""
+"La date de fin de mise en avant doit être nulle ou définie avant la date de "
+"fin de publication !"
 
 #: src/pyams_workflow/interfaces.py:536
 msgid "Publication end date"
@@ -143,6 +164,17 @@ msgstr "Date de fin de publication"
 #: src/pyams_workflow/interfaces.py:537
 msgid "Date past which content will not be visible"
 msgstr "Date au-delà de laquelle ce contenu ne sera plus visible"
+
+#: src/pyams_workflow/interfaces.py:546
+msgid "Can't define publication end date without publication start date!"
+msgstr ""
+"Vous ne pouvez pas définir une date de fin de publication sans date de "
+"début !"
+
+#: src/pyams_workflow/interfaces.py:549
+msgid "Publication end date must be defined after publication start date!"
+msgstr ""
+"La date de fin de publication doit être définie après la date de début !"
 
 #: src/pyams_workflow/interfaces.py:552
 msgid "Displayed publication date"
@@ -164,32 +196,6 @@ msgstr "Commentaire"
 msgid "Comment associated with this operation"
 msgstr "Commentaire associé à cette opération"
 
-#: src/pyams_workflow/interfaces.py:528
-msgid "Can't define push end date without publication start date!"
-msgstr ""
-"Vous ne pouvez pas définir de date de fin de mise en avant sans date de début "
-"de publication"
-
-#: src/pyams_workflow/interfaces.py:530
-msgid "Push end date must be defined after publication start date!"
-msgstr ""
-"La date de fin de mise en avant doit être définie après la date de début de publication !"
-
-#: src/pyams_workflow/interfaces.py:546
-msgid "Can't define publication end date without publication start date!"
-msgstr ""
-"Vous ne pouvez pas définir une date de fin de publication sans date de début !"
-
-#: src/pyams_workflow/interfaces.py:549
-msgid "Publication end date must be defined after publication start date!"
-msgstr ""
-"La date de fin de publication doit être définie après la date de début !"
-
-#: src/pyams_workflow/interfaces.py:533
-msgid "Push end date must be null or defined before publication end date!"
-msgstr ""
-"La date de fin de mise en avant doit être nulle ou définie avant la date de fin de publication !"
-
 #: src/pyams_workflow/workflow.py:127
 msgid "-- unknown --"
 msgstr "-- inconnu --"
@@ -210,14 +216,15 @@ msgstr "Nouveau statut"
 msgid "Modifier"
 msgstr "Modifié par"
 
-#: src/pyams_workflow/zmi/history.py:166
-msgid "History of this version"
-msgstr "Historique de cette version"
-
+#. pylint: disable=no-member
 #: src/pyams_workflow/zmi/history.py:162
 #, python-format
 msgid "Version {version} history"
 msgstr "Historique de la version {version}"
+
+#: src/pyams_workflow/zmi/history.py:166
+msgid "History of this version"
+msgstr "Historique de cette version"
 
 #: src/pyams_workflow/zmi/viewlet/transitions.py:61
 msgid "Change status..."

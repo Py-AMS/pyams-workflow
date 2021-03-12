@@ -22,6 +22,8 @@ This package is composed of a set of utility functions, usable into any Pyramid 
 
     >>> from pyramid_zodbconn import includeme as include_zodbconn
     >>> include_zodbconn(config)
+    >>> from cornice import includeme as include_cornice
+    >>> include_cornice(config)
     >>> from pyams_utils import includeme as include_utils
     >>> include_utils(config)
     >>> from pyams_site import includeme as include_site
@@ -574,10 +576,10 @@ PyAMS provides a view to display content history:
     <table...data-ams-location='http://example.com/content/++versions++/2'...class="table table-striped table-hover table-sm datatable">
       <thead>
         <tr>
-          <th   data-ams-column-name='date'>None</th>
-          <th   data-ams-column-name='state'>None</th>
-          <th   data-ams-column-name='principal'>None</th>
-          <th   data-ams-column-name='comment'>None</th>
+          <th   data-ams-column-name='date'>Date</th>
+          <th   data-ams-column-name='state'>New state</th>
+          <th   data-ams-column-name='principal'>Modifier</th>
+          <th   data-ams-column-name='comment'>Comment</th>
         </tr>
       </thead>
       <tbody>
@@ -612,27 +614,29 @@ This viewlet is used to display a dropdown menu of all content versions:
     >>> menu = WorkflowVersionsMenu(wf_content_2, request, None, None)
     >>> menu.update()
     >>> print(menu.render())
-    <span class="btn btn-primary btn-sm dropdown-toggle"
-          data-toggle="dropdown" aria-expanded="false">
-        Version 2 - Published
-    </span>
-    <span class="dropdown-menu">
-        <a class="dropdown-item pl-3 fas fa-arrow-right"
-           href="http://example.com/content/++versions++/4/admin#">
-            <i class=" fa-fw mr-1"></i>
-            Version 4 - Draft
-        </a>
-        <a class="dropdown-item pl-3 fas fa-arrow-right bg-primary text-color-white"
-           href="http://example.com/content/++versions++/2/admin#">
-            <i class=" fa-fw mr-1"></i>
+    <div class="dropdown mx-1">
+        <span class="btn btn-primary btn-sm dropdown-toggle"
+              data-toggle="dropdown" aria-expanded="false">
             Version 2 - Published
-        </a>
-        <a class="dropdown-item pl-3 fas fa-arrow-right"
-           href="http://example.com/content/++versions++/1/admin#">
-            <i class=" fa-fw mr-1"></i>
-            Version 1 - Archived
-        </a>
-    </span>
+        </span>
+        <span class="dropdown-menu">
+            <a class="dropdown-item pl-3 "
+               href="http://example.com/content/++versions++/4/admin#">
+                <i class="fas fa-arrow-right fa-fw mr-1"></i>
+                Version 4 - Draft
+            </a>
+            <a class="dropdown-item pl-3 bg-primary text-white"
+               href="http://example.com/content/++versions++/2/admin#">
+                <i class="fas fa-arrow-right fa-fw mr-1"></i>
+                Version 2 - Published
+            </a>
+            <a class="dropdown-item pl-3 "
+               href="http://example.com/content/++versions++/1/admin#">
+                <i class="fas fa-arrow-right fa-fw mr-1"></i>
+                Version 1 - Archived
+            </a>
+        </span>
+    </div>
 
 
 Content transitions viewlet
@@ -660,26 +664,28 @@ required principals and permissions):
     >>> menu = WorkflowTransitionsMenu(wf_content_4, request, None, None)
     >>> menu.update()
     >>> print(menu.render())
-    <span class="btn btn-danger btn-xs dropdown-toggle"
-          data-toggle="dropdown" aria-expanded="false">
-        Change status...
-    </span>
-    <span class="dropdown-menu">
-        <a class="dropdown-item pl-3 "
-           href="http://example.com/content/++versions++/4/wf-transition.html?workflow.widgets.transition_id=draft_to_published"
-           data-toggle="modal"
-           data-ams-modules="modal">
-            <i class="fa fa-fw mr-1"></i>
-            Publish
-        </a>
-        <a class="dropdown-item pl-3 "
-           href="http://example.com/content/++versions++/4/wf-transition.html?workflow.widgets.transition_id=delete"
-           data-toggle="modal"
-           data-ams-modules="modal">
-            <i class="fab fa-trash fa-fw mr-1"></i>
-            Delete version
-        </a>
-    </span>
+    <div class="dropdown mx-1">
+        <span class="btn btn-danger btn-sm dropdown-toggle"
+              data-toggle="dropdown" aria-expanded="false">
+            Change status...
+        </span>
+        <span class="dropdown-menu">
+            <a class="dropdown-item pl-3 "
+               href="http://example.com/content/++versions++/4/wf-transition.html?workflow.widgets.transition_id=draft_to_published"
+               data-toggle="modal"
+               data-ams-modules="modal">
+                <i class="fa fa-fw mr-1"></i>
+                Publish
+            </a>
+            <a class="dropdown-item pl-3 "
+               href="http://example.com/content/++versions++/4/wf-transition.html?workflow.widgets.transition_id=delete"
+               data-toggle="modal"
+               data-ams-modules="modal">
+                <i class="fab fa-trash fa-fw mr-1"></i>
+                Delete version
+            </a>
+        </span>
+    </div>
 
 
 Tests cleanup:

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 1.0\n"
-"POT-Creation-Date: 2021-01-17 03:11+0100\n"
+"POT-Creation-Date: 2021-03-07 10:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,8 +14,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Lingua 3.10.dev0\n"
+"Generated-By: Lingua 4.14\n"
 
+#. pylint: disable=invalid-name
 #: ./src/pyams_workflow/content.py:115
 #, python-format
 msgid "{date} by {principal}"
@@ -24,14 +25,6 @@ msgstr ""
 #: ./src/pyams_workflow/content.py:251
 #, python-format
 msgid "Clone created from version {source} (in « {state} » state)"
-msgstr ""
-
-#: ./src/pyams_workflow/interfaces.py:467
-msgid "Display first version date"
-msgstr ""
-
-#: ./src/pyams_workflow/interfaces.py:468
-msgid "Display current version date"
 msgstr ""
 
 #: ./src/pyams_workflow/interfaces.py:147
@@ -81,6 +74,14 @@ msgstr ""
 
 #: ./src/pyams_workflow/interfaces.py:454
 msgid "This permission will be required to display content"
+msgstr ""
+
+#: ./src/pyams_workflow/interfaces.py:467
+msgid "Display first version date"
+msgstr ""
+
+#: ./src/pyams_workflow/interfaces.py:468
+msgid "Display current version date"
 msgstr ""
 
 #: ./src/pyams_workflow/interfaces.py:489
@@ -134,12 +135,32 @@ msgid ""
 "will still be available via search engine or direct links"
 msgstr ""
 
+#: ./src/pyams_workflow/interfaces.py:528
+msgid "Can't define push end date without publication start date!"
+msgstr ""
+
+#: ./src/pyams_workflow/interfaces.py:530
+msgid "Push end date must be defined after publication start date!"
+msgstr ""
+
+#: ./src/pyams_workflow/interfaces.py:533
+msgid "Push end date must be null or defined before publication end date!"
+msgstr ""
+
 #: ./src/pyams_workflow/interfaces.py:536
 msgid "Publication end date"
 msgstr ""
 
 #: ./src/pyams_workflow/interfaces.py:537
 msgid "Date past which content will not be visible"
+msgstr ""
+
+#: ./src/pyams_workflow/interfaces.py:546
+msgid "Can't define publication end date without publication start date!"
+msgstr ""
+
+#: ./src/pyams_workflow/interfaces.py:549
+msgid "Publication end date must be defined after publication start date!"
 msgstr ""
 
 #: ./src/pyams_workflow/interfaces.py:552
@@ -163,26 +184,6 @@ msgstr ""
 msgid "Comment associated with this operation"
 msgstr ""
 
-#: ./src/pyams_workflow/interfaces.py:528
-msgid "Can't define push end date without publication start date!"
-msgstr ""
-
-#: ./src/pyams_workflow/interfaces.py:530
-msgid "Push end date must be defined after publication start date!"
-msgstr ""
-
-#: ./src/pyams_workflow/interfaces.py:546
-msgid "Can't define publication end date without publication start date!"
-msgstr ""
-
-#: ./src/pyams_workflow/interfaces.py:549
-msgid "Publication end date must be defined after publication start date!"
-msgstr ""
-
-#: ./src/pyams_workflow/interfaces.py:533
-msgid "Push end date must be null or defined before publication end date!"
-msgstr ""
-
 #: ./src/pyams_workflow/workflow.py:127
 msgid "-- unknown --"
 msgstr ""
@@ -203,13 +204,14 @@ msgstr ""
 msgid "Modifier"
 msgstr ""
 
-#: ./src/pyams_workflow/zmi/history.py:166
-msgid "History of this version"
-msgstr ""
-
+#. pylint: disable=no-member
 #: ./src/pyams_workflow/zmi/history.py:162
 #, python-format
 msgid "Version {version} history"
+msgstr ""
+
+#: ./src/pyams_workflow/zmi/history.py:166
+msgid "History of this version"
 msgstr ""
 
 #: ./src/pyams_workflow/zmi/viewlet/transitions.py:61
