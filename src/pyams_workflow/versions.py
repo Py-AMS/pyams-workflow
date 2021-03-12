@@ -110,6 +110,14 @@ class WorkflowVersionState(Persistent):
 
 
 @adapter_config(required=IWorkflowVersion,
+                provides=IWorkflow)
+def workflow_version_workflow_factory(context):
+    """Workflow content version workflow factory"""
+    content = get_parent(context, IWorkflowManagedContent)
+    return queryUtility(IWorkflow, name=content.workflow_name)
+
+
+@adapter_config(required=IWorkflowVersion,
                 provides=IWorkflowState)
 def workflow_version_state_factory(context):
     """Workflow content version state factory"""
