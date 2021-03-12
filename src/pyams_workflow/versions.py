@@ -21,6 +21,7 @@ from persistent import Persistent
 from persistent.list import PersistentList
 from persistent.mapping import PersistentMapping
 from pyramid.events import subscriber
+from zope.component import queryUtility
 from zope.container.folder import Folder
 from zope.interface import alsoProvides
 from zope.location.interfaces import ISublocations
@@ -32,6 +33,7 @@ from pyams_utils.adapter import ContextAdapter, adapter_config, get_annotation_a
 from pyams_utils.factory import factory_config, get_object_factory
 from pyams_utils.registry import get_utility
 from pyams_utils.request import check_request, query_request
+from pyams_utils.timezone import gmtime
 from pyams_utils.traversing import get_parent
 from pyams_workflow.interfaces import IWorkflow, IWorkflowManagedContent, IWorkflowState, \
     IWorkflowStateHistoryItem, IWorkflowTransitionEvent, IWorkflowVersion, \
@@ -81,7 +83,7 @@ class WorkflowVersionState(Persistent):
     def state(self, value):
         """State setter"""
         self._state = value
-        self._state_date = datetime.utcnow()
+        self._state_date = gmtime(datetime.utcnow())
         request = query_request()
         if request is not None:
             self._state_principal = request.principal.id
@@ -132,7 +134,7 @@ def handle_workflow_transition(event):
     principal = event.principal
     factory = get_object_factory(IWorkflowStateHistoryItem)
     if factory is not None:
-        item = factory(date=datetime.utcnow(),
+        item = factory(date=gmtime(datetime.utcnow()),
                        source_state=event.source,
                        target_state=event.destination,
                        transition_id=event.transition.transition_id,
@@ -148,7 +150,7 @@ def handle_workflow_version_transition(event):
     principal = event.principal
     factory = get_object_factory(IWorkflowStateHistoryItem)
     if factory is not None:
-        item = factory(date=datetime.utcnow(),
+        item = factory(date=gmtime(datetime.utcnow()),
                        source_version=IWorkflowState(event.old_object).version_id,
                        source_state=event.source,
                        target_state=event.destination,
@@ -299,6 +301,17 @@ class WorkflowVersions(Folder):
         del self.state_by_version[version_id]
         self.deleted[version_id] = self[str(version_id)]
         del self[str(version_id)]
+
+
+def get_last_version(content):
+    """Helper function used to get last content version"""
+    versions = IWorkflowVersions(content, None)
+    if versions is None:
+        return None
+    result = versions.get_last_versions()
+    if result:
+        return result[0]
+    return None
 
 
 @adapter_config(required=IWorkflowManagedContent,
