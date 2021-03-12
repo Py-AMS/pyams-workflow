@@ -57,7 +57,7 @@ class WorkflowVersionsMenu(DropdownMenu):
         state = IWorkflowState(self.context)
         return translate(_("Version {id} - {state}")).format(
             id=state.version_id,
-            state=self.workflow.get_state_label(state.state))
+            state=translate(self.workflow.get_state_label(state.state)))
 
     def _get_viewlets(self):
         translate = self.request.localizer.translate
@@ -66,10 +66,10 @@ class WorkflowVersionsMenu(DropdownMenu):
             item = MenuItem(version, self.request, self.view, self)
             item.label = translate(_("Version {id} - {state}")).format(
                 id=state.version_id,
-                state=self.workflow.get_state_label(state.state))
-            item.css_class = 'fas fa-arrow-right'
+                state=translate(self.workflow.get_state_label(state.state)))
+            item.icon_class = 'fas fa-arrow-right'
             if version is self.context:
-                item.css_class += ' bg-primary text-color-white'
+                item.css_class = 'bg-primary text-white'
             item.href = absolute_url(version, self.request,
                                      'admin#{}'.format(self.request.view_name))
             yield 'version_{}'.format(state.version_id), item

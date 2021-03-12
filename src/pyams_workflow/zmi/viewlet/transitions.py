@@ -50,14 +50,14 @@ class TransitionMenuItem(MenuItem):
         self.weight = transition.order
 
 
-@viewlet_config(name='workflow-transitions.menu',
+@viewlet_config(name='pyams_workflow.transitions',
                 context=IWorkflowVersion, layer=IAdminLayer, view=Interface,
                 manager=IToolbarViewletManager, weight=200)
 class WorkflowTransitionsMenu(DropdownMenu):
     """Workflow transitions menu"""
 
     status = 'danger'
-    css_class = 'btn-xs'
+    css_class = 'btn-sm'
     label = _("Change status...")
 
     def _get_viewlets(self):
