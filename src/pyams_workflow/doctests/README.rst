@@ -614,7 +614,7 @@ This viewlet is used to display a dropdown menu of all content versions:
     >>> menu = WorkflowVersionsMenu(wf_content_2, request, None, None)
     >>> menu.update()
     >>> print(menu.render())
-    <div class="dropdown mx-1">
+    <div class="d-flex dropdown mx-1">
         <span class="btn btn-primary btn-sm dropdown-toggle"
               data-toggle="dropdown" aria-expanded="false">
             Version 2 - Published
@@ -664,7 +664,7 @@ required principals and permissions):
     >>> menu = WorkflowTransitionsMenu(wf_content_4, request, None, None)
     >>> menu.update()
     >>> print(menu.render())
-    <div class="dropdown mx-1">
+    <div class="d-flex dropdown mx-1">
         <span class="btn btn-danger btn-sm dropdown-toggle"
               data-toggle="dropdown" aria-expanded="false">
             Change status...
