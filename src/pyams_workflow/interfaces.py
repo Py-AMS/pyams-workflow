@@ -16,14 +16,15 @@ This module defines package public interfaces.
 """
 
 from zope.annotation import IAttributeAnnotatable
-from zope.interface import Attribute, Interface, implementer, invariant
-from zope.interface.interfaces import IObjectEvent, Invalid, ObjectEvent
+from zope.interface import Attribute, Interface, Invalid, implementer, invariant
+from zope.interface.interfaces import IObjectEvent, ObjectEvent
 from zope.lifecycleevent import IObjectCreatedEvent, ObjectCreatedEvent
 from zope.schema import Bool, Choice, Datetime, Int, List, Object, Set, Text, TextLine
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
 from pyams_security.interfaces.base import VIEW_PERMISSION
 from pyams_security.schema import PrincipalField
+
 
 from pyams_workflow import _
 
