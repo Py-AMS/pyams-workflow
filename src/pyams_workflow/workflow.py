@@ -16,9 +16,10 @@ This module defines main workflow management utility.
 """
 
 from pyramid.httpexceptions import HTTPUnauthorized
-from zope.componentvocabulary.vocabulary import UtilityVocabulary
+from zope.component import getUtilitiesFor
 from zope.interface import implementer
 from zope.lifecycleevent import ObjectModifiedEvent
+from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
 from pyams_utils.adapter import adapter_config
 from pyams_utils.registry import get_utility
@@ -80,6 +81,8 @@ class Transition:  # pylint: disable=too-many-instance-attributes
 @implementer(IWorkflow)
 class Workflow:  # pylint: disable=too-many-instance-attributes
     """Workflow utility base class"""
+
+    label = None
 
     def __init__(self, transitions, states,  # pylint: disable=too-many-arguments
                  initial_state=None,
@@ -317,8 +320,14 @@ class WorkflowInfo:
 
 
 @vocabulary_config(name=WORKFLOWS_VOCABULARY)
-class WorkflowsVocabulary(UtilityVocabulary):
+class WorkflowsVocabulary(SimpleVocabulary):
     """Workflows vocabulary"""
 
     interface = IWorkflow
-    nameOnly = True
+
+    def __init__(self, context, **kw):
+        terms = [
+            SimpleTerm(name, title=util.label)
+            for name, util in getUtilitiesFor(self.interface, context)
+        ]
+        super().__init__(terms)

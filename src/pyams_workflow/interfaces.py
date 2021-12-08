@@ -174,6 +174,8 @@ class IWorkflow(Interface):
     A workflow is a "state machine" defined by a set of states and transitions.
     """
 
+    label = Attribute("Workflow label")
+
     initial_state = Attribute("Initial state")
 
     update_states = Set(title="Updatable states",
