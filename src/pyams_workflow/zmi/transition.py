@@ -54,7 +54,12 @@ class WorkflowContentTransitionForm(AdminModalAddForm):
 
     @property
     def title(self):
-        return IPageTitle(self.context) or '--'
+        registry = self.request.registry
+        title = registry.queryMultiAdapter((self.context, self.request, self),
+                                           IPageTitle)
+        if title is None:
+            title = IPageTitle(self.context, None)
+        return title or '--'
 
     @property
     def legend(self):
@@ -95,7 +100,7 @@ class WorkflowContentTransitionForm(AdminModalAddForm):
             transition_id.value = transition_id.extract()
 
     def create_and_add(self, data):
-        data = data.get(self, {})
+        data = data.get(self, data)
         info = IWorkflowInfo(self.context)
         result = info.fire_transition(self.transition.transition_id, comment=data.get('comment'))
         info.fire_automatic()
