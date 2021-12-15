@@ -70,6 +70,8 @@ class WorkflowVersionsMenu(DropdownMenu):
             item.icon_class = 'fas fa-arrow-right'
             if version is self.context:
                 item.css_class = 'bg-primary text-white'
+            else:
+                item.icon_class = f'{item.icon_class} text-secondary'
             item.href = absolute_url(version, self.request,
                                      'admin#{}'.format(self.request.view_name))
             yield 'version_{}'.format(state.version_id), item
