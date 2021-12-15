@@ -58,7 +58,7 @@ msgstr "ID du mandataire qui a défini ce statut"
 
 #: src/pyams_workflow/interfaces.py:383 src/pyams_workflow/interfaces.py:594
 msgid "Urgent request?"
-msgstr "Requête urgente ?"
+msgstr "Demande urgente ?"
 
 #: src/pyams_workflow/interfaces.py:448
 msgid "Workflow name"
@@ -118,7 +118,7 @@ msgstr "Première date à laquelle ce contenu a été accepté pour sa publicati
 
 #: src/pyams_workflow/interfaces.py:508
 msgid "Publication start date"
-msgstr "Date de début de publication"
+msgstr "Début de publication"
 
 #: src/pyams_workflow/interfaces.py:509
 msgid "Date from which content will be visible"
@@ -126,7 +126,7 @@ msgstr "Date à partir de laquelle ce contenu sera visible"
 
 #: src/pyams_workflow/interfaces.py:513
 msgid "Push end date"
-msgstr "Mis en avant jusqu'au"
+msgstr "Mettre en avant jusqu'au"
 
 #: src/pyams_workflow/interfaces.py:514
 msgid ""
@@ -137,7 +137,7 @@ msgstr ""
 "Certains contenus peuvent être \"poussés\" en front-office par certains "
 "composants ; si vous indiquez une date ici, ce contenu ne sera plus poussé "
 "au-delà de cette date, mais restera accessible via un moteur de recherche ou "
-"des liens directs"
+"des liens directs (à la différence de contenus retirés ou archivés)"
 
 #: src/pyams_workflow/interfaces.py:528
 msgid "Can't define push end date without publication start date!"
@@ -159,7 +159,7 @@ msgstr ""
 
 #: src/pyams_workflow/interfaces.py:536
 msgid "Publication end date"
-msgstr "Date de fin de publication"
+msgstr "Retrait automatique le"
 
 #: src/pyams_workflow/interfaces.py:537
 msgid "Date past which content will not be visible"
