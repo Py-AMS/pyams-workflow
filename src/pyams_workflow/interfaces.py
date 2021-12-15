@@ -606,12 +606,3 @@ class IWorkflowCommentInfo(Interface):
     comment = Text(title=_("Comment"),
                    description=_("Comment associated with this operation"),
                    required=False)
-
-
-class IWorkflowManagementTask(Interface):
-    """Workflow management task marker interface
-
-    This interface is used to mark scheduler tasks (see PyAMS_scheduler) which are
-    used by some workflows which can provide a "future" publication date, and which
-    relies on task scheduler to do the actual publication.
-    """
