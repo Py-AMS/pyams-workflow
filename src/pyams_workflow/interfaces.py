@@ -503,10 +503,15 @@ class IWorkflowPublicationInfo(Interface):
                            required=False,
                            readonly=True)
 
-    first_publication_date = Datetime(title=_("First publication date"),
-                                      description=_("First date at which content was accepted "
-                                                    "for publication"),
+    first_publication_date = Datetime(title=_("First version publication date"),
+                                      description=_("First date at which content version "
+                                                    "was accepted for publication"),
                                       required=False)
+
+    content_publication_date = Datetime(title=_("First content publication date"),
+                                        description=_("First date at which first content version "
+                                                      "was accepted for publication"),
+                                        required=False)
 
     publication_effective_date = Datetime(title=_("Publication start date"),
                                           description=_("Date from which content will be "

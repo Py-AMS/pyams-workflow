@@ -88,6 +88,7 @@ class WorkflowContentPublicationInfo(Persistent, Contained):
     _publication_date = FieldProperty(IWorkflowPublicationInfo['publication_date'])
     publisher = FieldProperty(IWorkflowPublicationInfo['publisher'])
     _first_publication_date = FieldProperty(IWorkflowPublicationInfo['first_publication_date'])
+    _content_publication_date = FieldProperty(IWorkflowPublicationInfo['content_publication_date'])
     _publication_effective_date = FieldProperty(
         IWorkflowPublicationInfo['publication_effective_date'])
     push_end_date = FieldProperty(IWorkflowPublicationInfo['push_end_date'])
@@ -123,6 +124,11 @@ class WorkflowContentPublicationInfo(Persistent, Contained):
         return self._first_publication_date
 
     @property
+    def content_publication_date(self):
+        """Content first publication date getter"""
+        return self._content_publication_date
+
+    @property
     def publication_effective_date(self):
         """Publication effective date getter"""
         return self._publication_effective_date
@@ -135,6 +141,9 @@ class WorkflowContentPublicationInfo(Persistent, Contained):
         if value:
             if (self._first_publication_date is None) or (self._first_publication_date > value):
                 self._first_publication_date = value
+            if (self._content_publication_date is None) or \
+                    (self._content_publication_date > value):
+                self._content_publication_date = value
             if dc is not None:
                 dc.effective = value
         elif self._publication_effective_date:
