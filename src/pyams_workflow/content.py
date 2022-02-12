@@ -136,10 +136,12 @@ class WorkflowContentPublicationInfo(Persistent, Contained):
     @publication_effective_date.setter
     def publication_effective_date(self, value):
         """Publication effective date setter"""
-        value = gmtime(value)
         dc = IZopeDublinCore(self.__parent__, None)  # pylint: disable=invalid-name
+        now = gmtime(datetime.utcnow())
         if value:
-            if (self._first_publication_date is None) or (self._first_publication_date > value):
+            value = max(now, gmtime(value))
+            if (self._first_publication_date is None) or \
+                    (self._first_publication_date > value):
                 self._first_publication_date = value
             if (self._content_publication_date is None) or \
                     (self._content_publication_date > value):
@@ -195,6 +197,7 @@ class WorkflowContentPublicationInfo(Persistent, Contained):
         self._first_publication_date = None
         self._publication_effective_date = None
         if complete:
+            self._content_publication_date = None
             self._publication_expiration_date = None
             self.push_end_date = None
 

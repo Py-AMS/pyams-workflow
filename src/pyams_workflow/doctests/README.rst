@@ -350,6 +350,8 @@ We can then check our content publication status:
 
     >>> publication_info.first_publication_date is None
     True
+    >>> publication_info.content_publication_date is None
+    True
     >>> publication_info.publication_effective_date is None
     True
 
@@ -372,6 +374,8 @@ The document is not published, because it doesn't have any publication effective
     datetime.datetime(..., tzinfo=...)
     >>> publication_info.push_end_date_index
     datetime.datetime(9999, 12, 31, 11, 59, 59, 999999, tzinfo=<StaticTzInfo 'GMT'>)
+    >>> publication_info.content_publication_date == publication_info.first_publication_date
+    True
 
 Let's check versions history:
 
@@ -415,6 +419,11 @@ The first version should now be archived:
     >>> publication_info_2.publication_effective_date = datetime.utcnow()
     >>> publication_info_2.publication_expiration_date = datetime.utcnow() + timedelta(days=10)
     >>> IWorkflowPublicationInfo.validateInvariants(publication_info_2)
+
+    >>> publication_info_2.content_publication_date == publication_info_2.first_publication_date
+    False
+    >>> publication_info_2.content_publication_date == publication_info.first_publication_date
+    True
 
 Let's now add another version... and remove it!
 
@@ -622,7 +631,7 @@ This viewlet is used to display a dropdown menu of all content versions:
         <span class="dropdown-menu">
             <a class="dropdown-item pl-3 "
                href="http://example.com/content/++versions++/4/admin#">
-                <i class="fas fa-arrow-right fa-fw mr-1"></i>
+                <i class="fas fa-arrow-right text-secondary fa-fw mr-1"></i>
                 Version 4 - Draft
             </a>
             <a class="dropdown-item pl-3 bg-primary text-white"
@@ -632,7 +641,7 @@ This viewlet is used to display a dropdown menu of all content versions:
             </a>
             <a class="dropdown-item pl-3 "
                href="http://example.com/content/++versions++/1/admin#">
-                <i class="fas fa-arrow-right fa-fw mr-1"></i>
+                <i class="fas fa-arrow-right text-secondary fa-fw mr-1"></i>
                 Version 1 - Archived
             </a>
         </span>
