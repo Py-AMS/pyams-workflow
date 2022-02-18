@@ -354,4 +354,4 @@ class WorkflowVersionsSublocations(ContextAdapter):
 
     def sublocations(self):
         """Versions sub-locations getter"""
-        return IWorkflowVersions(self.context).values()
+        yield from IWorkflowVersions(self.context).values()
