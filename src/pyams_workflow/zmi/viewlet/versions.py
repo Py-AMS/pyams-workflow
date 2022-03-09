@@ -41,7 +41,7 @@ from pyams_workflow import _  # pylint: disable=ungrouped-imports
 class WorkflowVersionsMenu(DropdownMenu):
     """Workflow versions menu viewlet"""
 
-    status = 'primary'
+    status = 'info'
     css_class = 'btn-sm'
 
     @reify

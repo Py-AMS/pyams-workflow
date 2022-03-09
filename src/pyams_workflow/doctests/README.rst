@@ -624,7 +624,7 @@ This viewlet is used to display a dropdown menu of all content versions:
     >>> menu.update()
     >>> print(menu.render())
     <div class="d-flex dropdown mx-1">
-        <span class="btn btn-primary btn-sm dropdown-toggle"
+        <span class="btn btn-info btn-sm dropdown-toggle"
               data-toggle="dropdown" aria-expanded="false">
             Version 2 - Published
         </span>
