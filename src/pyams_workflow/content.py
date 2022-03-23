@@ -85,13 +85,18 @@ class WorkflowContentDisplayedDateVocabulary(SimpleVocabulary):
 class WorkflowContentPublicationInfo(Persistent, Contained):
     """Workflow content info"""
 
-    _publication_date = FieldProperty(IWorkflowPublicationInfo['publication_date'])
-    publisher = FieldProperty(IWorkflowPublicationInfo['publisher'])
-    _first_publication_date = FieldProperty(IWorkflowPublicationInfo['first_publication_date'])
-    _content_publication_date = FieldProperty(IWorkflowPublicationInfo['content_publication_date'])
+    _publication_date = FieldProperty(
+        IWorkflowPublicationInfo['publication_date'])
+    publisher = FieldProperty(
+        IWorkflowPublicationInfo['publisher'])
+    _first_publication_date = FieldProperty(
+        IWorkflowPublicationInfo['first_publication_date'])
+    _content_publication_date = FieldProperty(
+        IWorkflowPublicationInfo['content_publication_date'])
     _publication_effective_date = FieldProperty(
         IWorkflowPublicationInfo['publication_effective_date'])
-    push_end_date = FieldProperty(IWorkflowPublicationInfo['push_end_date'])
+    push_end_date = FieldProperty(
+        IWorkflowPublicationInfo['push_end_date'])
     _publication_expiration_date = FieldProperty(
         IWorkflowPublicationInfo['publication_expiration_date'])
     displayed_publication_date = FieldProperty(
