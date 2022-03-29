@@ -282,6 +282,14 @@ Creating a content supporting workflow
     >>> list(versions.get_last_versions())
     [<pyams_workflow.tests.WfContent object at 0x...>]
 
+Some utility functions also exists to get last versions of a given content:
+
+    >>> from pyams_workflow.versions import get_last_version, get_last_version_in_state
+    >>> get_last_version(wf_content) is wf_content
+    True
+    >>> get_last_version_in_state(wf_content) is wf_content
+    True
+
     >>> from pyams_workflow.interfaces import IWorkflowVersion, IWorkflowState, IWorkflowInfo
 
     >>> wf_state = IWorkflowState(wf_content)
@@ -398,6 +406,13 @@ We are now going to create a new version and publish it:
     >>> versions.last_version_id
     2
 
+    >>> get_last_version(wf_content) is wf_content_2
+    True
+    >>> get_last_version_in_state(wf_content) is wf_content
+    True
+    >>> get_last_version_in_state(wf_content_2) is wf_content_2
+    True
+
 We can now publish the new version:
 
     >>> wf_info_2 = IWorkflowInfo(wf_content_2)
@@ -451,6 +466,13 @@ Let's now add another version... and remove it!
     [2]
     >>> pprint.pprint(versions.versions_by_state[ARCHIVED])
     [1]
+
+    >>> get_last_version(wf_content) is wf_content_3
+    True
+    >>> get_last_version_in_state(wf_content) is wf_content
+    True
+    >>> get_last_version_in_state(wf_content_2) is wf_content_2
+    True
 
     >>> wf_info_3 = IWorkflowInfo(wf_content_3)
     >>> wf_info_3.fire_transition_toward(DELETED)

@@ -23,6 +23,7 @@ from persistent.mapping import PersistentMapping
 from pyramid.events import subscriber
 from zope.component import queryUtility
 from zope.container.folder import Folder
+from zope.dublincore.interfaces import IZopeDublinCore
 from zope.interface import alsoProvides
 from zope.location.interfaces import ISublocations
 from zope.schema.fieldproperty import FieldProperty
@@ -312,6 +313,21 @@ def get_last_version(content):
     if result:
         return result[0]
     return None
+
+
+def get_last_version_in_state(content):
+    """Helper function used to get last content version in same state"""
+
+    def get_version_order(version):
+        """Version sort order getter"""
+        dc = IZopeDublinCore(version, None)  # pylint: disable=invalid-name
+        if dc is not None:
+            return dc.modified
+        return int(version.__name__)
+
+    return sorted(IWorkflowVersions(content).get_versions(IWorkflowState(content).state),
+                  key=get_version_order,
+                  reverse=True)[0]
 
 
 @adapter_config(required=IWorkflowManagedContent,
