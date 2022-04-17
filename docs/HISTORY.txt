@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.3.0
+-----
+ - added helper functions to get last versions of a given content
+ - added support for Python 3.10
+ - updated translations
+ - updated versions menu status
+
 1.2.0
 -----
  - added workflow label
