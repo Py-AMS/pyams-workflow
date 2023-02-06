@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.3.1
+-----
+ - added helper class to handle publication info of "hidden" contents
+ - added support for Python 3.11
+
 1.3.0
 -----
  - added helper functions to get last versions of a given content
