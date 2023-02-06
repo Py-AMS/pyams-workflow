@@ -21,6 +21,7 @@ from persistent import Persistent
 from pyramid.events import subscriber
 from zope.container.contained import Contained
 from zope.dublincore.interfaces import IZopeDublinCore
+from zope.interface import implementer
 from zope.schema.fieldproperty import FieldProperty
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
@@ -279,3 +280,33 @@ def handle_cloned_object(event):
 def handle_cloned_publication_support(event):
     """Reset publication info when an object is cloned"""
     IWorkflowPublicationInfo(event.object).reset(complete=False)
+
+
+@implementer(IWorkflowPublicationInfo)
+class HiddenContentPublicationInfo:
+    """Hidden content publication info"""
+
+    publication_date = None
+    publisher = None
+    publication = None
+    first_publication_date = None
+    content_publication_date = None
+    publication_effective_date = None
+    publication_expiration_date = None
+    visible_publication_date = None
+    push_end_date = None
+    push_end_date_index = None
+
+    @staticmethod
+    def reset(complete=True):  # pylint: disable=unused-argument
+        """Reset publication dates"""
+
+    @staticmethod
+    def is_published(check_parent=True):  # pylint: disable=unused-argument
+        """Check if content is published"""
+        return False
+
+    @staticmethod
+    def is_visible(request=None, check_parent=True):  # pylint: disable=unused-argument
+        """Check if content is published and visible to given request"""
+        return False

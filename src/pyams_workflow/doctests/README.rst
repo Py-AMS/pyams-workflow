@@ -517,6 +517,16 @@ Trying to fire the same transition manually should also fire an exception:
     ...
     pyramid.httpexceptions.HTTPUnauthorized: ...
 
+A custom class implementing IWorkflowPublicationInfo can be used in specific contexts to handle
+hidden contents:
+
+    >>> from pyams_workflow.content import HiddenContentPublicationInfo
+    >>> info = HiddenContentPublicationInfo()
+    >>> info.is_published()
+    False
+    >>> info.is_visible()
+    False
+
 
 Workflow namespace and traverser
 --------------------------------
