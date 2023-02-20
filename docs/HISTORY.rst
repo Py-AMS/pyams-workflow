@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.3.2
+-----
+ - updated base transition form renderer
+
 1.3.1
 -----
  - added helper class to handle publication info of "hidden" contents
