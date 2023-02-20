@@ -119,12 +119,13 @@ class WorkflowContentTransitionFormRenderer(ContextRequestViewAdapter):
 
     def render(self, changes):  # pylint: disable=no-self-use
         """Form changes renderer"""
-        if not changes:
+        if changes is None:
             return None
         if IWorkflowVersion.providedBy(changes):  # new version
             target = changes
         else:
-            if changes.parent is None:  # deleted version
+            info = IWorkflowInfo(changes, None)
+            if (info is not None) and (info.parent is None):  # deleted version
                 versions = self.view.versions
                 last_version = versions.get_last_versions()
                 if last_version:  # other versions
