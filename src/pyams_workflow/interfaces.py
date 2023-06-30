@@ -407,8 +407,11 @@ class IWorkflowVersions(Interface):
 
     last_version_id = Attribute("Last version ID")
 
-    def get_version(self, version_id):
-        """Get version matching given id"""
+    def get_version(self, version_id=None):
+        """Get version matching given id
+
+        If version ID is None or equals -1, method returns the last version.
+        """
 
     def get_versions(self, states=None, sort=False, reverse=False):
         """Get all versions of object known for this (optional) state"""

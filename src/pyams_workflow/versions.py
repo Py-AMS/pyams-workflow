@@ -173,9 +173,12 @@ class WorkflowVersions(Folder):
         self.versions_by_state = PersistentMapping()
         self.deleted = PersistentMapping()
 
-    def get_version(self, version_id):
-        """Get version with given ID"""
-        if version_id is None:
+    def get_version(self, version_id=None):
+        """Get version with given ID
+
+        If version ID is None or equals -1, method returns the last version.
+        """
+        if (version_id is None) or (version_id == -1):
             version_id = self.last_version_id
         try:
             return self[str(version_id)]
