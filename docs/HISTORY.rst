@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.3.3
+-----
+ - updated default view permission
+ - automatically get last version if specified version ID is -1
+
 1.3.2
 -----
  - updated base transition form renderer
