@@ -22,7 +22,7 @@ from zope.lifecycleevent import IObjectCreatedEvent, ObjectCreatedEvent
 from zope.schema import Bool, Choice, Datetime, Int, List, Object, Set, Text, TextLine
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
-from pyams_security.interfaces.base import VIEW_PERMISSION
+from pyams_security.interfaces.base import PUBLIC_PERMISSION
 from pyams_security.schema import PrincipalField
 
 
@@ -459,7 +459,7 @@ class IWorkflowManagedContent(IAttributeAnnotatable):
     view_permission = Choice(title=_("View permission"),
                              description=_("This permission will be required to display content"),
                              vocabulary='PyAMS permissions',
-                             default=VIEW_PERMISSION,
+                             default=PUBLIC_PERMISSION,
                              required=False)
 
 
