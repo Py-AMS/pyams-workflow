@@ -26,7 +26,7 @@ from zope.schema.fieldproperty import FieldProperty
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
 from pyams_security.interfaces import ISecurityManager
-from pyams_security.interfaces.base import VIEW_PERMISSION
+from pyams_security.interfaces.base import PUBLIC_PERMISSION
 from pyams_utils.adapter import adapter_config, get_annotation_adapter
 from pyams_utils.date import SH_DATE_FORMAT, format_date, format_datetime
 from pyams_utils.factory import factory_config, get_object_factory
@@ -244,7 +244,7 @@ class WorkflowContentPublicationInfo(Persistent, Contained):
                not request.has_permission(content.view_permission, context=self.__parent__):
                 return False
         else:
-            if not request.has_permission(VIEW_PERMISSION, context=self.__parent__):
+            if not request.has_permission(PUBLIC_PERMISSION, context=self.__parent__):
                 return False
         return self.is_published(check_parent)
 
