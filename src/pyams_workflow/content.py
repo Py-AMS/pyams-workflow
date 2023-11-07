@@ -209,25 +209,34 @@ class WorkflowContentPublicationInfo(Persistent, Contained):
 
     def is_published(self, check_parent=True):
         """Check if content is published"""
+        # check associated workflow?
+        workflow = IWorkflow(self.__parent__, None)
+        if workflow is not None:
+            if not workflow.visible_states:
+                return False
+            # check content workflow state
+            state = IWorkflowState(self.__parent__, None)
+            if state is not None:
+                if state.state not in workflow.visible_states:
+                    return False
+            else:
+                versions = IWorkflowVersions(self.__parent__, None)
+                if (versions is not None) and not versions.has_version(workflow.visible_states):
+                    return False
+        # check publication dates
+        now = tztime(datetime.utcnow())
+        if not ((self.publication_effective_date is not None) and
+                (self.publication_effective_date <= now) and
+                ((self.publication_expiration_date is None) or
+                 (self.publication_expiration_date >= now))):
+            return False
         # check is parent is also published...
         if check_parent:
             parent = get_parent(self.__parent__, IWorkflowPublicationSupport,
                                 allow_context=False)
             if (parent is not None) and not IWorkflowPublicationInfo(parent).is_published():
                 return False
-        # associated workflow?
-        workflow = IWorkflow(self.__parent__, None)
-        if (workflow is not None) and not workflow.visible_states:
-            return False
-        # check content versions
-        versions = IWorkflowVersions(self.__parent__, None)
-        if (versions is not None) and not versions.get_versions(workflow.visible_states):
-            return False
-        now = tztime(datetime.utcnow())
-        return (self.publication_effective_date is not None) and \
-               (self.publication_effective_date <= now) and \
-               ((self.publication_expiration_date is None) or
-                (self.publication_expiration_date >= now))
+        return True
 
     def is_visible(self, request=None, check_parent=True):
         """Check if content is published and visible to given request"""
