@@ -498,12 +498,10 @@ Removing a version doesn't reset last version ID:
 Trying to archive this content directly should fail, because the transition is protected by
 FORBIDDEN_PERMISSION. But this requires an active authentication policy:
 
-    >>> from pyramid.authorization import ACLAuthorizationPolicy
-    >>> from pyams_security.policy import PyAMSAuthenticationPolicy
+    >>> from pyams_security.policy import PyAMSSecurityPolicy
 
-    >>> policy = PyAMSAuthenticationPolicy(secret='PyAMS 0.1.0', http_only=True, secure=False)
-    >>> config.set_authorization_policy(ACLAuthorizationPolicy())
-    >>> config.set_authentication_policy(policy)
+    >>> policy = PyAMSSecurityPolicy(secret='PyAMS 0.1.0', http_only=True, secure=False)
+    >>> config.set_security_policy(policy)
 
     >>> wf_info_2.fire_transition_toward(ARCHIVED)
     Traceback (most recent call last):
@@ -692,11 +690,10 @@ the current request principal:
     >>> print(menu.render())
 
 Why is this menu empty? That's because current workflow doesn't allow manual archives.
-We can try whith another version (we remove authorization policy to avoid settings all
+We can try with another version (we remove security policy to avoid setting of all
 required principals and permissions):
 
-    >>> config.set_authentication_policy(None)
-    >>> config.set_authorization_policy(None)
+    >>> config.set_security_policy(None)
 
     >>> wf_content_4 = versions.get_version(4)
     >>> wf_content_4
