@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.0.1
+-----
+ - upgraded to Pyramid 2.0
+
 1.3.3
 -----
  - updated default view permission
