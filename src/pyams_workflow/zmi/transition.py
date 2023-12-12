@@ -31,13 +31,13 @@ from pyams_workflow.interfaces import IWorkflow, IWorkflowCommentInfo, IWorkflow
     IWorkflowManagedContent, IWorkflowState, IWorkflowTransitionInfo, IWorkflowVersion, \
     IWorkflowVersions
 from pyams_zmi.form import AdminModalAddForm
-from pyams_zmi.interfaces import IAdminLayer, IPageTitle
-
+from pyams_zmi.interfaces import IAdminLayer
 
 __docformat__ = 'restructuredtext'
 
 
-@ajax_form_config(name='wf-transition.html', context=IWorkflowVersion, layer=IPyAMSLayer)
+@ajax_form_config(name='wf-transition.html',
+                  context=IWorkflowVersion, layer=IPyAMSLayer)
 class WorkflowContentTransitionForm(AdminModalAddForm):
     # pylint: disable=abstract-method
     """Workflow content transition form"""
@@ -53,13 +53,9 @@ class WorkflowContentTransitionForm(AdminModalAddForm):
             self.request.params.get('workflow.widgets.transition_id'))
 
     @property
-    def title(self):
-        registry = self.request.registry
-        title = registry.queryMultiAdapter((self.context, self.request, self),
-                                           IPageTitle)
-        if title is None:
-            title = IPageTitle(self.context, None)
-        return title or '--'
+    def subtitle(self):
+        """Subtitle getter"""
+        return self.request.localizer.translate(self.transition.title)
 
     @property
     def legend(self):
