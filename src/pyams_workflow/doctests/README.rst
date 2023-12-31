@@ -613,8 +613,8 @@ PyAMS provides a view to display content history:
     >>> table.update()
     >>> print(table.render())
     <table...data-ams-location='http://example.com/content/++versions++/2'...class="table table-striped table-hover table-sm datatable">
-      <thead>
-        <tr>
+      <thead >
+        <tr >
           <th   data-ams-column-name='date'>Date</th>
           <th   data-ams-column-name='state'>New state</th>
           <th   data-ams-column-name='principal'>Modifier</th>
@@ -623,22 +623,22 @@ PyAMS provides a view to display content history:
       </thead>
       <tbody>
         <tr  id='table_...::...'>
-          <td  class="nowrap">.../.../... - ...:...</td>
-          <td >--</td>
-          <td >--</td>
-          <td >Clone created from version 1 (in « Published » state)</td>
+          <td   class="nowrap">.../.../... - ...:...</td>
+          <td  >--</td>
+          <td  >--</td>
+          <td  >Clone created from version 1 (in « Published » state)</td>
         </tr>
         <tr  id='table_...::...'>
-          <td  class="nowrap">.../.../... - ...:...</td>
-          <td >Draft</td>
-          <td >--</td>
-          <td >--</td>
+          <td   class="nowrap">.../.../... - ...:...</td>
+          <td  >Draft</td>
+          <td  >--</td>
+          <td  >--</td>
         </tr>
         <tr  id='table_...::...'>
-          <td  class="nowrap">.../.../... - ...:...</td>
-          <td >Published</td>
-          <td >--</td>
-          <td >--</td>
+          <td   class="nowrap">.../.../... - ...:...</td>
+          <td  >Published</td>
+          <td  >--</td>
+          <td  >--</td>
         </tr>
       </tbody>
     </table>
