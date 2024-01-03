@@ -1,9 +1,14 @@
 Changelog
 =========
 
+2.0.2
+-----
+ - updated ZMI dependency
+ - updated doctests based on last ZMI release
+
 2.0.1
 -----
-  - updated modal forms title
+ - updated modal forms title
 
 2.0.0
 -----
