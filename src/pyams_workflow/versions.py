@@ -328,9 +328,12 @@ def get_last_version_in_state(content):
             return dc.modified
         return int(version.__name__)
 
-    return sorted(IWorkflowVersions(content).get_versions(IWorkflowState(content).state),
-                  key=get_version_order,
-                  reverse=True)[0]
+    versions = IWorkflowVersions(content, None)
+    if versions is not None:
+        return sorted(versions.get_versions(IWorkflowState(content).state),
+                      key=get_version_order,
+                      reverse=True)[0]
+    return content
 
 
 @adapter_config(required=IWorkflowManagedContent,
