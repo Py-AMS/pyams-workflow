@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.0.3
+-----
+ - added check in versions helper for contents not supporting versioning
+
 2.0.2
 -----
  - updated ZMI dependency
