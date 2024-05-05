@@ -18,7 +18,7 @@ of all available content transitions.
 
 from zope.interface import Interface
 
-from pyams_skin.viewlet.menu import DropdownMenu, MenuItem
+from pyams_skin.viewlet.menu import DropdownMenu, MenuDivider, MenuItem
 from pyams_utils.registry import get_utility
 from pyams_utils.traversing import get_parent
 from pyams_utils.url import absolute_url
@@ -47,7 +47,7 @@ class TransitionMenuItem(MenuItem):
                              transition.user_data.get('view_name', 'wf-transition.html')),
             transition=transition.transition_id)
         self.modal_target = True
-        self.weight = transition.order
+        self.weight = transition.order * 10
 
 
 @viewlet_config(name='pyams_workflow.transitions',
@@ -69,6 +69,10 @@ class WorkflowTransitionsMenu(DropdownMenu):
         info = IWorkflowInfo(self.context)
         for transition_id in info.get_manual_transition_ids():
             transition = wf.get_transition_by_id(transition_id)
+            if transition.user_data.get('menu_divider'):
+                divider = MenuDivider(self.context, self.request, self.view, None)
+                divider.weight = (transition.order * 10) - 1
+                viewlets.append((f'{transition_id}_divider', divider))
             menu = TransitionMenuItem(self.context, self.request, self.view, self, transition)
             viewlets.append((transition_id, menu))
         return sorted(viewlets, key=lambda x: x[1].weight)

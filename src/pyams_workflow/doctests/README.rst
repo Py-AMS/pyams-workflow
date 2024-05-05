@@ -196,6 +196,7 @@ We can now initialize a list of transitions:
     ...                     condition=can_delete_version,
     ...                     action=delete_action,
     ...                     menu_icon_class='fab fa-trash',
+    ...                     menu_divider=True,
     ...                     history_label="Version deleted",
     ...                     order=99)
 
@@ -715,6 +716,7 @@ required principals and permissions):
                 <i class="fa fa-fw mr-1"></i>
                 Publish
             </a>
+            <div class="dropdown-divider"></div>
             <a class="dropdown-item pl-3 "
                href="http://example.com/content/++versions++/4/wf-transition.html?workflow.widgets.transition_id=delete"
                data-toggle="modal"
