@@ -21,6 +21,7 @@ from zope.interface import implementer
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
+from pyams_security.interfaces.base import IPrincipalInfo
 from pyams_utils.adapter import adapter_config
 from pyams_utils.registry import get_utility
 from pyams_utils.request import check_request
@@ -174,7 +175,8 @@ class WorkflowInfo:
         versions = IWorkflowVersions(self.parent)
         state = IWorkflowState(self.context)
         if request is None:
-            request = check_request()
+            principal_id = principal.id if IPrincipalInfo.providedBy(principal) else principal
+            request = check_request(principal_id=principal_id)
         # this raises InvalidTransitionError if id is invalid for current state
         transition = self.wf.get_transition(state.state, transition_id)
         # check whether we may execute this workflow transition
