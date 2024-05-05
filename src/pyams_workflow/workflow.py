@@ -296,7 +296,7 @@ class WorkflowInfo:
         for transition_id in self.get_fireable_transition_ids(check_security):
             transition = self.wf.get_transition_by_id(transition_id)
             if transition.destination == state:
-                result.append( transition_id)
+                result.append(transition_id)
         return result
 
     def get_automatic_transition_ids(self):
