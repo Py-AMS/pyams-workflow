@@ -1,6 +1,12 @@
 Changelog
 =========
 
+2.1.0
+-----
+ - added support for dividers in workflow transitions dropdown menu
+ - added marker interface to history table to support extension viewlets
+ - updated principal getter when firing transition
+
 2.0.3
 -----
  - added check in versions helper for contents not supporting versioning
