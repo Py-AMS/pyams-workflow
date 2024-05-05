@@ -14,7 +14,8 @@
 
 """
 
-from zope.interface import Interface
+from pyramid.interfaces import IView
+from zope.interface import Interface, implementer
 
 from pyams_layer.interfaces import IPyAMSLayer
 from pyams_pagelet.pagelet import pagelet_config
@@ -50,6 +51,7 @@ class WorkflowVersionHistoryMenuItem(NavigationMenuItem):
     href = '#version-history.html'
 
 
+@implementer(IView)
 class WorkflowVersionHistoryTable(Table):
     """Workflow version history table"""
 
