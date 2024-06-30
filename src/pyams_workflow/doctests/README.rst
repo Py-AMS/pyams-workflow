@@ -382,7 +382,7 @@ The document is not published, because it doesn't have any publication effective
     >>> publication_info.visible_publication_date
     datetime.datetime(..., tzinfo=...)
     >>> publication_info.push_end_date_index
-    datetime.datetime(9999, 12, 31, 11, 59, 59, 999999, tzinfo=<UTC>)
+    datetime.datetime(9999, 12, 31, 23, 59, 59, 999999, tzinfo=<UTC>)
     >>> publication_info.content_publication_date == publication_info.first_publication_date
     True
 
