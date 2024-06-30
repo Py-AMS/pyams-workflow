@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.1.1
+-----
+ - updated doctests
+
 2.1.0
 -----
  - added support for dividers in workflow transitions dropdown menu

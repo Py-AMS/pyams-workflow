@@ -23,7 +23,7 @@ DOCS = os.path.join(os.path.dirname(__file__),
 README = os.path.join(DOCS, 'README.rst')
 HISTORY = os.path.join(DOCS, 'HISTORY.rst')
 
-version = '2.1.0'
+version = '2.1.1'
 long_description = open(README).read() + '\n\n' + open(HISTORY).read()
 
 tests_require = [
@@ -64,7 +64,7 @@ setup(name='pyams_workflow',
           # -*- Extra requirements: -*-
           'persistent',
           'pyams_security',
-          'pyams_utils',
+          'pyams_utils >= 2.5.0',
           'pyramid >= 2.0.0',
           'zope.annotation',
           'zope.component',
