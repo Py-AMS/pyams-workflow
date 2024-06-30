@@ -15,7 +15,7 @@
 This module defines base classes for contents supporting workflows.
 """
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from persistent import Persistent
 from pyramid.events import subscriber
@@ -32,7 +32,7 @@ from pyams_utils.date import SH_DATE_FORMAT, format_date, format_datetime
 from pyams_utils.factory import factory_config, get_object_factory
 from pyams_utils.registry import get_utility
 from pyams_utils.request import check_request
-from pyams_utils.timezone import GMT, gmtime, tztime
+from pyams_utils.timezone import UTC, gmtime, tztime
 from pyams_utils.traversing import get_parent
 from pyams_utils.vocabulary import vocabulary_config
 from pyams_workflow.interfaces import DISPLAY_CURRENT_VERSION, DISPLAY_FIRST_VERSION, \
@@ -143,7 +143,7 @@ class WorkflowContentPublicationInfo(Persistent, Contained):
     def publication_effective_date(self, value):
         """Publication effective date setter"""
         dc = IZopeDublinCore(self.__parent__, None)  # pylint: disable=invalid-name
-        now = gmtime(datetime.utcnow())
+        now = datetime.now(timezone.utc)
         if value:
             value = max(now, gmtime(value))
             if (self._first_publication_date is None) or \
@@ -164,7 +164,7 @@ class WorkflowContentPublicationInfo(Persistent, Contained):
         """Push end date getter"""
         value = self.push_end_date or self.publication_expiration_date
         if value is None:
-            value = datetime(9999, 12, 31, 11, 59, 59, 999999, GMT)
+            value = datetime(9999, 12, 31, 23, 59, 59, 999999, UTC)
         return gmtime(value)
 
     @property
@@ -224,7 +224,7 @@ class WorkflowContentPublicationInfo(Persistent, Contained):
                 if (versions is not None) and not versions.has_version(workflow.visible_states):
                     return False
         # check publication dates
-        now = tztime(datetime.utcnow())
+        now = tztime(datetime.now(timezone.utc))
         if not ((self.publication_effective_date is not None) and
                 (self.publication_effective_date <= now) and
                 ((self.publication_expiration_date is None) or
@@ -273,7 +273,7 @@ def handle_cloned_object(event):
     source_state = IWorkflowState(event.source)
     factory = get_object_factory(IWorkflowStateHistoryItem)
     if factory is not None:
-        item = factory(date=datetime.utcnow(),
+        item = factory(date=datetime.now(timezone.utc),
                        principal=request.principal.id,
                        comment=translate(_("Clone created from version {source} (in « {state} » "
                                            "state)")).format(

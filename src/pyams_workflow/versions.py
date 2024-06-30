@@ -15,7 +15,7 @@
 This module defines workflow versions management classes and adapters.
 """
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from persistent import Persistent
 from persistent.list import PersistentList
@@ -84,7 +84,7 @@ class WorkflowVersionState(Persistent):
     def state(self, value):
         """State setter"""
         self._state = value
-        self._state_date = gmtime(datetime.utcnow())
+        self._state_date = datetime.now(timezone.utc)
         request = query_request()
         if request is not None:
             self._state_principal = request.principal.id
@@ -135,7 +135,7 @@ def handle_workflow_transition(event):
     principal = event.principal
     factory = get_object_factory(IWorkflowStateHistoryItem)
     if factory is not None:
-        item = factory(date=gmtime(datetime.utcnow()),
+        item = factory(date=gmtime(datetime.now(timezone.utc)),
                        source_state=event.source,
                        target_state=event.destination,
                        transition_id=event.transition.transition_id,
@@ -151,7 +151,7 @@ def handle_workflow_version_transition(event):
     principal = event.principal
     factory = get_object_factory(IWorkflowStateHistoryItem)
     if factory is not None:
-        item = factory(date=gmtime(datetime.utcnow()),
+        item = factory(date=datetime.now(timezone.utc),
                        source_version=IWorkflowState(event.old_object).version_id,
                        source_state=event.source,
                        target_state=event.destination,
@@ -282,7 +282,7 @@ class WorkflowVersions(Folder):
             translate = request.localizer.translate
             workflow = get_utility(IWorkflow,
                                    name=get_parent(self, IWorkflowManagedContent).workflow_name)
-            item = WorkflowHistoryItem(date=datetime.utcnow(),
+            item = WorkflowHistoryItem(date=datetime.now(timezone.utc),
                                        source_version=wf_state.version_id,
                                        source_state=translate(
                                            workflow.states.getTerm(wf_state.state).title),
