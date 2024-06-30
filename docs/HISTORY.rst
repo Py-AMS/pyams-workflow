@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.1.2
+-----
+ - switched default timezone to UTC
+
 2.1.1
 -----
  - updated doctests
