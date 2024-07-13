@@ -180,9 +180,10 @@ class WorkflowInfo:
         # this raises InvalidTransitionError if id is invalid for current state
         transition = self.wf.get_transition(state.state, transition_id)
         # check whether we may execute this workflow transition
-        if check_security and transition.permission:
-            if not request.has_permission(transition.permission, context=self.context):
-                raise HTTPUnauthorized()
+        if (check_security and
+                transition.permission and
+                not request.has_permission(transition.permission, context=self.context)):
+            raise HTTPUnauthorized()
         # now make sure transition can still work in this context
         if not transition.condition(self, self.context):
             raise ConditionFailedError()
