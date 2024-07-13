@@ -275,6 +275,11 @@ Creating a content supporting workflow
     [<pyams_workflow.tests.WfContent object at 0x...>]
 
     >>> IWorkflowInfo(wf_content).fire_transition('init')
+
+The "get_version" method, without argument, should return the last version:
+
+    >>> versions.get_version() is wf_content
+    True
     >>> list(versions.get_versions())
     [<pyams_workflow.tests.WfContent object at 0x...>]
     >>> list(versions.get_versions('draft'))
@@ -402,6 +407,10 @@ We are now going to create a new version and publish it:
     >>> wf_content_2
     <pyams_workflow.tests.WfContent object at 0x...>
 
+    >>> versions.get_version(1) is wf_content
+    True
+    >>> versions.get_version() is wf_content_2
+    True
     >>> list(versions.get_versions())
     [<pyams_workflow.tests.WfContent object at 0x...>, <pyams_workflow.tests.WfContent object at 0x...>]
     >>> versions.last_version_id
@@ -468,6 +477,8 @@ Let's now add another version... and remove it!
     >>> pprint.pprint(versions.versions_by_state[ARCHIVED])
     [1]
 
+    >>> versions.get_version() is wf_content_3
+    True
     >>> get_last_version(wf_content) is wf_content_3
     True
     >>> get_last_version_in_state(wf_content) is wf_content
@@ -495,6 +506,11 @@ Removing a version doesn't reset last version ID:
     [2]
     >>> pprint.pprint(versions.versions_by_state.get(ARCHIVED))
     [1]
+
+Deleted versions are no more included in the list of accessible content versions:
+
+    >>> versions.get_version() is wf_content_2
+    True
 
 Trying to archive this content directly should fail, because the transition is protected by
 FORBIDDEN_PERMISSION. But this requires an active authentication policy:

@@ -179,7 +179,7 @@ class WorkflowVersions(Folder):
         If version ID is None or equals -1, method returns the last version.
         """
         if (version_id is None) or (version_id == -1):
-            version_id = self.last_version_id
+            version_id = max(self.state_by_version)
         try:
             return self[str(version_id)]
         except KeyError as ex:  # pylint: disable=invalid-name
