@@ -1,6 +1,11 @@
 Changelog
 =========
 
+2.1.3
+-----
+ - updated "get_version()" method to exclude deleted versions from result
+   when no version index is specified
+
 2.1.2
 -----
  - switched default timezone to UTC
