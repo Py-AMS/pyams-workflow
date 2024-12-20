@@ -629,7 +629,7 @@ PyAMS provides a view to display content history:
     >>> table = WorkflowVersionHistoryTable(wf_content_2, request)
     >>> table.update()
     >>> print(table.render())
-    <table...data-ams-location='http://example.com/content/++versions++/2'...class="table table-striped table-hover table-sm datatable">
+    <table...data-ams-location='http://example.com/content/++versions++/2'...class="table table-striped table-hover table-sm datatable w-100">
       <thead >
         <tr >
           <th   data-ams-column-name='date'>Date</th>
