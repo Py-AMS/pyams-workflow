@@ -1,6 +1,11 @@
 Changelog
 =========
 
+2.1.4
+-----
+ - updated doctest for last PyAMS_zmi compatibility
+ - added support for Python 3.12
+
 2.1.3
 -----
  - updated "get_version()" method to exclude deleted versions from result
