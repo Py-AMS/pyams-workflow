@@ -36,7 +36,7 @@ from pyams_utils.timezone import UTC, gmtime, tztime
 from pyams_utils.traversing import get_parent
 from pyams_utils.vocabulary import vocabulary_config
 from pyams_workflow.interfaces import DISPLAY_CURRENT_VERSION, DISPLAY_FIRST_VERSION, \
-    IObjectClonedEvent, IWorkflow, IWorkflowManagedContent, IWorkflowPublicationInfo, \
+    DISPLAY_UNVERSIONED, IObjectClonedEvent, IWorkflow, IWorkflowManagedContent, IWorkflowPublicationInfo, \
     IWorkflowPublicationSupport, IWorkflowState, IWorkflowStateHistoryItem, IWorkflowVersions, \
     PYAMS_CONTENT_PUBLICATION_DATES, VERSION_DISPLAY, VersionError, WORKFLOW_CONTENT_KEY
 
@@ -53,11 +53,17 @@ class WorkflowContentDisplayedDateVocabulary(SimpleVocabulary):
     def __init__(self, context):
         request = check_request()
         terms = []
+        # check for first version
+        first_version_label = request.localizer.translate(DISPLAY_UNVERSIONED)
         versions = IWorkflowVersions(context.__parent__, None)
-        if versions is not None:
-            # check for first version
-            first_version_label = request.localizer.translate(
-                VERSION_DISPLAY[DISPLAY_FIRST_VERSION])
+        if versions is None:
+            info = IWorkflowPublicationInfo(context.__parent__, None)            # check for first version
+            first_version_label = '{1} (= {0})'.format(
+                    first_version_label.lower(),
+                    format_date(info.publication_effective_date,
+                                format_string=SH_DATE_FORMAT))
+            terms.append(SimpleTerm(DISPLAY_FIRST_VERSION, title=first_version_label))
+        else:
             try:
                 first_version = versions.get_version(1)  # pylint: disable=assignment-from-no-return
             except VersionError:

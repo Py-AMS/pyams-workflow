@@ -474,6 +474,9 @@ VERSION_DISPLAY = {
     DISPLAY_CURRENT_VERSION: _("Display current version date")
 }
 
+DISPLAY_UNVERSIONED = _("Display content publication date")
+
+
 VERSION_DISPLAY_VOCABULARY = SimpleVocabulary([
     SimpleTerm(v, title=t) for v, t in VERSION_DISPLAY.items()
 ])
