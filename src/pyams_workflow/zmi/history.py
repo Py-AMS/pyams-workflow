@@ -40,7 +40,8 @@ __docformat__ = 'restructuredtext'
 from pyams_workflow import _  # pylint: disable=ungrouped-imports
 
 
-@viewlet_config(name='workflow-history.menu', context=IWorkflowVersion, layer=IAdminLayer,
+@viewlet_config(name='workflow-history.menu',
+                context=IWorkflowVersion, layer=IAdminLayer,
                 manager=IContentManagementMenu, weight=900,
                 permission=VIEW_SYSTEM_PERMISSION)
 class WorkflowVersionHistoryMenuItem(NavigationMenuItem):
@@ -118,7 +119,7 @@ class WorkflowVersionHistoryStateColumn(I18nColumnMixin, GetAttrColumn):
 
 
 @adapter_config(name='principal',
-                context=(Interface, IAdminLayer, WorkflowVersionHistoryTable),
+                required=(Interface, IAdminLayer, WorkflowVersionHistoryTable),
                 provides=IColumn)
 class WorkflowVersionHistoryPrincipalColumn(I18nColumnMixin, GetAttrColumn):
     """Workflow version history principal column"""
@@ -152,7 +153,8 @@ class WorkflowVersionHistoryCommentColumn(I18nColumnMixin, GetAttrColumn):
         return text_to_html(obj.comment or '--')
 
 
-@pagelet_config(name='version-history.html', context=IWorkflowVersion, layer=IPyAMSLayer,
+@pagelet_config(name='version-history.html',
+                context=IWorkflowVersion, layer=IPyAMSLayer,
                 permission=VIEW_SYSTEM_PERMISSION)
 class WorkflowVersionHistoryView(TableAdminView):
     """Workflow version history view"""
