@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.1.5
+-----
+ - updated workflow content displayed date vocabulary to handle un-versioned contents
+
 2.1.4
 -----
  - updated doctest for last PyAMS_zmi compatibility
