@@ -148,22 +148,25 @@ class WorkflowContentPublicationInfo(Persistent, Contained):
     @publication_effective_date.setter
     def publication_effective_date(self, value):
         """Publication effective date setter"""
-        dc = IZopeDublinCore(self.__parent__, None)  # pylint: disable=invalid-name
-        now = datetime.now(timezone.utc)
-        if value:
-            value = max(now, gmtime(value))
-            if (self._first_publication_date is None) or \
-                    (self._first_publication_date > value):
-                self._first_publication_date = value
-            if (self._content_publication_date is None) or \
-                    (self._content_publication_date > value):
-                self._content_publication_date = value
-            if dc is not None:
-                dc.effective = value
-        elif self._publication_effective_date:
-            if dc is not None:
-                del dc._mapping['Date.Effective']  # pylint: disable=protected-access
         self._publication_effective_date = value
+
+    def apply_first_publication_date(self):
+        """Apply first publication date based on previous publications and effective publication date"""
+        dc = IZopeDublinCore(self.__parent__, None)  # pylint: disable=invalid-name
+        effective_date = self.publication_effective_date
+        if effective_date:
+            now = datetime.now(timezone.utc)
+            effective_date = max(now, gmtime(effective_date))
+            if (self._first_publication_date is None) or \
+                    (self._first_publication_date > effective_date):
+                self._first_publication_date = effective_date
+            if (self._content_publication_date is None) or \
+                    (self._content_publication_date > effective_date):
+                self._content_publication_date = effective_date
+            if dc is not None:
+                dc.effective = effective_date
+        elif (dc is not None) and dc.effective:
+            del dc._mapping['Date.Effective']  # pylint: disable=protected-access
 
     @property
     def push_end_date_index(self):

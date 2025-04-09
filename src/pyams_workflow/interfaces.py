@@ -524,6 +524,9 @@ class IWorkflowPublicationInfo(Interface):
                                                         "visible"),
                                           required=False)
 
+    def apply_first_publication_date(self):
+        """Apply first publication date based on previous publications and effective publication date"""
+        
     push_end_date = Datetime(title=_("Push end date"),
                              description=_("Some contents can be pushed by components to "
                                            "front-office pages; if you set a date here, this "

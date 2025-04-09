@@ -109,14 +109,15 @@ We can now initialize a list of transitions:
     >>> def can_delete_version(wf, context):
     ...     return True
 
-    >>> from datetime import datetime, timedelta
+    >>> from datetime import datetime, timedelta, timezone
     >>> from pyams_workflow.interfaces import IWorkflowPublicationInfo
     >>> def publish_action(wf, context):
     ...     """Publish version"""
     ...     request = check_request(principal_id='admin:admin')
     ...     publication_info = IWorkflowPublicationInfo(context)
-    ...     publication_info.publication_date = datetime.utcnow()
+    ...     publication_info.publication_date = datetime.now(timezone.utc)
     ...     publication_info.publisher = request.principal.id
+    ...     publication_info.apply_first_publication_date()
     ...     version_id = IWorkflowState(context).version_id
     ...     for version in IWorkflowVersions(context).get_versions((PUBLISHED, )):
     ...         if version is not context:
@@ -377,7 +378,9 @@ We can then check our content publication status:
 The document is not published, because it doesn't have any publication effective date!
 
     >>> from datetime import datetime
-    >>> publication_info.publication_effective_date = datetime.utcnow()
+    >>> publication_info.publication_effective_date = datetime.now(timezone.utc)
+    >>> publication_info.apply_first_publication_date()
+
     >>> publication_info.is_published()
     True
     >>> publication_info.is_visible()
@@ -441,10 +444,12 @@ The first version should now be archived:
     >>> publication_info_2.visible_publication_date
     datetime.datetime(..., tzinfo=...)
 
-    >>> publication_info_2.publication_effective_date = datetime.utcnow()
+    >>> publication_info_2.publication_effective_date = datetime.now(timezone.utc)
     >>> publication_info_2.publication_expiration_date = datetime.utcnow() + timedelta(days=10)
     >>> IWorkflowPublicationInfo.validateInvariants(publication_info_2)
 
+    >>> publication_info_2.content_publication_date is None
+    False
     >>> publication_info_2.content_publication_date == publication_info_2.first_publication_date
     False
     >>> publication_info_2.content_publication_date == publication_info.first_publication_date
