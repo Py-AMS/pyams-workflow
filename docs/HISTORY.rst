@@ -1,6 +1,11 @@
 Changelog
 =========
 
+2.2.0
+-----
+ - added method to content workflow publication info interface to apply first publication date
+   on content "real" publication
+
 2.1.5
 -----
  - updated workflow content displayed date vocabulary to handle un-versioned contents
